@@ -1,5 +1,5 @@
 {
-    "name": "byjg/mailwrapper",
+    "name": "byjg/convert",
     "description": "A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa. ",
     "authors": [
         {
