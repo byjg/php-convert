@@ -43,7 +43,8 @@ class FromUTF8
         } else {
             $newResult = "=?iso-8859-1?Q?";
             $contaLinha = 0;
-            for ($i = 0; $i < strlen($result); $i++) {
+            $lenResult = strlen($result);
+            for ($i = 0; $i < $lenResult; $i++) {
                 if (($result[$i] == "=") && ($contaLinha >= ($wrap - 3)) || ($contaLinha >= $wrap)) {
                     $newResult .= "?=\r\n=?iso-8859-1?Q?" . $result[$i];
                     $contaLinha = 0;
@@ -88,7 +89,7 @@ class FromUTF8
 
     /**
      * Convert a text in UTF8 to ascii html entities
-     * 
+     *
      * @param string $text
      * @return string
      */
@@ -123,7 +124,8 @@ class FromUTF8
 	protected static function baseConversion($vector, $text)
 	{
 		$result = "";
-		for ($i=0; $i<strlen($text); $i++)
+        $lenText = strlen($text);
+		for ($i=0; $i<$lenText; $i++)
 		{
 			if (ord($text[$i])==195)
 			{

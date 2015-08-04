@@ -1,4 +1,5 @@
 # Convert
+[![Build Status](https://travis-ci.org/byjg/convert.svg)](https://travis-ci.org/byjg/convert)
 
 ## Description
 
