@@ -48,6 +48,12 @@ class FromUTF8Test extends \PHPUnit_Framework_TestCase
             '=?iso-8859-1?Q?e_funciona?=',
             FromUTF8::toIso88591Email("Teste de validação de email título de email para ver se funciona", 30)
         );
+
+        $this->assertEquals(
+            "=?iso-8859-1?Q?Test_uU?=",
+            FromUTF8::toIso88591Email("Test ũŨ")
+        );
+
     }
 
     /**
@@ -73,6 +79,11 @@ class FromUTF8Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'Teste de validacao de email titulo de email para ver se funciona',
             FromUTF8::removeAccent("Teste de validação de email titulo de email para ver se funciona")
+        );
+
+        $this->assertEquals(
+            "Test uU",
+            FromUTF8::removeAccent("Test ũŨ")
         );
     }
 
@@ -100,6 +111,11 @@ class FromUTF8Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'Teste de valida&ccedil;&atilde;o de email t&iacute;tulo de email para ver se funciona',
             FromUTF8::toHtmlEntities("Teste de validação de email título de email para ver se funciona")
+        );
+
+        $this->assertEquals(
+            "Test &utilde;&Utilde;",
+            FromUTF8::toHtmlEntities("Test ũŨ")
         );
     }
 
