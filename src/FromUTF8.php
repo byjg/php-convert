@@ -5,26 +5,26 @@ namespace ByJG\Convert;
 class FromUTF8
 {
 
-	/**
-	 * Convert a text in UTF8 to ISO-8859-1 used in emails.
-	 *
-	 * @param string $text
-	 * @param int $wrap
-	 * @return string
-	 */
-	public static function toIso88591Email($text, $wrap = 0)
-	{
+    /**
+     * Convert a text in UTF8 to ISO-8859-1 used in emails.
+     *
+     * @param string $text
+     * @param int $wrap
+     * @return string
+     */
+    public static function toIso88591Email($text, $wrap = 0)
+    {
         $ISO88591_CONV = [
-            194 => [
+            194 => [ // C2
                 161=>'=A1' /*¡*/, 162=>'=A2' /*¢*/, 163=>'=A3' /*£*/, 164=>'=A4' /*¤*/, 165=>'=A5' /*¥*/,
                 166=>'=A6' /*¦*/, 167=>'=A7' /*§*/, 168=>'=A8' /*¨*/, 169=>'=A9' /*©*/, 170=>'=AA' /*ª*/,
                 171=>'=AB' /*«*/, 172=>'=AC' /*¬*/, 173=>'=AD' /* */, 174=>'=AE' /*®*/, 175=>'=AF' /*¯*/,
                 176=>'=B0' /*°*/, 177=>'=B1' /*±*/, 178=>'=B2' /*²*/, 179=>'=B3' /*³*/, 180=>'=B4' /*´*/,
                 181=>'=B5' /*µ*/, 182=>'=B6' /*¶*/, 183=>'=B7' /*·*/, 184=>'=B8' /*¸*/, 185=>'=B9' /*¹*/,
                 186=>'=BA' /*º*/, 187=>'=BB' /*»*/, 188=>'=BC' /*¼*/, 189=>'=BD' /*½*/, 190=>'=BE' /*¾*/,
-                191=>'=BF' /*¿*/,
+                191=>'=BF' /*¿*/, 160 => '=A0' /* */,
             ],
-            195 => [
+            195 => [ // C3
                 128=>'=C0' /*À*/, 129=>'=C1' /*Á*/, 130=>'=C2' /*Â*/, 131=>'=C3' /*Ã*/, 132=>'=C4' /*Ä*/,
                 133=>'=C5' /*Å*/, 134=>'=C6' /*Æ*/, 135=>'=C7' /*Ç*/, 136=>'=C8' /*È*/, 137=>'=C9' /*É*/,
                 138=>'=CA' /*Ê*/, 139=>'=CB' /*Ë*/, 140=>'=CC' /*Ì*/, 141=>'=CD' /*Í*/, 142=>'=CE' /*Î*/,
@@ -39,29 +39,28 @@ class FromUTF8
                 183=>'=F7' /*÷*/, 184=>'=F8' /*ø*/, 185=>'=F9' /*ù*/, 186=>'=FA' /*ú*/, 187=>'=FB' /*û*/,
                 188=>'=FC' /*ü*/, 189=>'=FD' /*ý*/, 190=>'=FE' /*þ*/, 191=>'=FF' /*ÿ*/,
             ],
-            197 => [
-                169=>'u' /*ũ*/,
-                168=>'U' /*Ũ*/,
+            197 => [ // C5
+                169=>'u' /*ũ*/, 168=>'U' /*Ũ*/,
             ]
         ];
 
-		$textPre = str_replace("=", "=3D", $text);
-		$result = FromUTF8::baseConversion($ISO88591_CONV, $textPre);
-		if ($result == $textPre) {
+        $textPre = str_replace("=", "=3D", $text);
+        $result = FromUTF8::baseConversion($ISO88591_CONV, $textPre);
+        if ($result == $textPre) {
             return $text;
         } else {
             $result = str_replace(" ", "_", $result);
         }
 
         if ($wrap == 0) {
-            return "=?iso-8859-1?Q?" . $result . "?=";
+            return "=?iso-8859-1?Q?".$result."?=";
         } else {
             $newResult = "=?iso-8859-1?Q?";
             $contaLinha = 0;
             $lenResult = strlen($result);
             for ($i = 0; $i < $lenResult; $i++) {
                 if (($result[$i] == "=") && ($contaLinha >= ($wrap - 3)) || ($contaLinha >= $wrap)) {
-                    $newResult .= "?=\r\n=?iso-8859-1?Q?" . $result[$i];
+                    $newResult .= "?=\r\n=?iso-8859-1?Q?".$result[$i];
                     $contaLinha = 0;
                 } else {
                     $newResult .= $result[$i];
@@ -75,15 +74,15 @@ class FromUTF8
         }
     }
 
-	/**
-	 * Remove all accents from UTF8 Chars.
-	 *
-	 * @param string $text
-	 * @return string
-	 */
-	public static function removeAccent($text)
-	{
-		$ASCII_CONV = [
+    /**
+     * Remove all accents from UTF8 Chars.
+     *
+     * @param string $text
+     * @return string
+     */
+    public static function removeAccent($text)
+    {
+        $ASCII_CONV = [
             194 => [
                 161=>'!' /*¡*/, 162=>'C' /*¢*/, 163=>'pound' /*£*/, 164=>'currency' /*¤*/, 165=>'yen' /*¥*/,
                 166=>'|' /*¦*/, 167=>'section' /*§*/, 168=>'"' /*¨*/, 169=>'(C)' /*©*/, 170=>'a.' /*ª*/,
@@ -91,7 +90,7 @@ class FromUTF8
                 176=>'o.' /*°*/, 177=>'+-' /*±*/, 178=>'2' /*²*/, 179=>'3' /*³*/, 180=>'`' /*´*/,
                 181=>'micro' /*µ*/, 182=>'paragraph' /*¶*/, 183=>'.' /*·*/, 184=>',' /*¸*/, 185=>'1' /*¹*/,
                 186=>'0.' /*º*/, 187=>'>>' /*»*/, 188=>'1/4' /*¼*/, 189=>'1/2' /*½*/, 190=>'3/4' /*¾*/,
-                191=>'?' /*¿*/,
+                191=>'?' /*¿*/, 160 => ' ' /* */,
             ],
             195 => [
                 128=>'A' /*À*/, 129=>'A' /*Á*/, 130=>'A' /*Â*/, 131=>'A' /*Ã*/, 132=>'A' /*Ä*/,
@@ -113,8 +112,8 @@ class FromUTF8
             ]
         ];
 
-		return FromUTF8::baseConversion($ASCII_CONV, $text);
-	}
+        return FromUTF8::baseConversion($ASCII_CONV, $text);
+    }
 
     /**
      * Convert a text in UTF8 to ascii html entities
@@ -122,9 +121,9 @@ class FromUTF8
      * @param string $text
      * @return string
      */
-	public static function toHtmlEntities($text)
-	{
-		$ASCII_CONV = [
+    public static function toHtmlEntities($text)
+    {
+        $ASCII_CONV = [
             194 => [
                 161=>'&iexcl;'  /*¡*/, 162=>'&cent;'   /*¢*/, 163=>'&pound;'  /*£*/, 164=>'&curren;' /*¤*/, 165=>'&yen;' /*¥*/,
                 166=>'&brvbar;' /*¦*/, 167=>'&sect;'   /*§*/, 168=>'&uml;'    /*¨*/, 169=>'&copy;'   /*©*/, 170=>'&ordf;' /*ª*/,
@@ -132,7 +131,7 @@ class FromUTF8
                 176=>'&deg;'    /*°*/, 177=>'&plusmn;' /*±*/, 178=>'&sup2;'   /*²*/, 179=>'&sup3;'   /*³*/, 180=>'&acute;' /*´*/,
                 181=>'&micro;'  /*µ*/, 182=>'&para;'   /*¶*/, 183=>'&middot;' /*·*/, 184=>'&cedil;'  /*¸*/, 185=>'&sup1;' /*¹*/,
                 186=>'&ordm;'   /*º*/, 187=>'&raquo;'  /*»*/, 188=>'&frac14;' /*¼*/, 189=>'&frac12;' /*½*/, 190=>'&frac34;' /*¾*/,
-                191=>'&iquest;' /*¿*/,
+                191=>'&iquest;' /*¿*/, 160=>'&nbsp;'
             ],
             195 => [
                 128=>'&Agrave;' /*À*/, 129=>'&Aacute;' /*Á*/, 130=>'&Acirc;'  /*Â*/, 131=>'&Atilde;' /*Ã*/, 132=>'&Auml;'   /*Ä*/,
@@ -154,33 +153,29 @@ class FromUTF8
             ]
         ];
 
-		return FromUTF8::baseConversion($ASCII_CONV, $text);
-	}
+        return FromUTF8::baseConversion($ASCII_CONV, $text);
+    }
 
-	/**
-	 * Base conversion
-	 *
-	 * @param string[] $vector
-	 * @param string $text
-	 * @return string
-	 */
-	protected static function baseConversion($vector, $text)
-	{
-		$result = "";
+    /**
+     * Base conversion
+     *
+     * @param string[] $vector
+     * @param string $text
+     * @return string
+     */
+    protected static function baseConversion($vector, $text)
+    {
+        $result = "";
         $lenText = strlen($text);
-		for ($i=0; $i<$lenText; $i++)
-		{
-			if (ord($text[$i])==194 || ord($text[$i])==195 || ord($text[$i])==197)
-			{
+        for ($i = 0; $i < $lenText; $i++) {
+            if (ord($text[$i]) == 194 || ord($text[$i]) == 195 || ord($text[$i]) == 197) {
                 $first = ord($text[$i++]);
-				$result .= $vector[$first][ord($text[$i])];
-			}
-			else
-			{
-				$result .= $text[$i];
-			}
-		}
+                $result .= isset($vector[$first][ord($text[$i])]) ? $vector[$first][ord($text[$i])] : '?';
+            } else {
+                $result .= $text[$i];
+            }
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 }

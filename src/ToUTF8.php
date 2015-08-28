@@ -4,15 +4,16 @@ namespace ByJG\Convert;
 
 class ToUTF8
 {
+
     /**
      * Convert a ascii html entities to UTF8
      * 
      * @param string $text
      * @return string
      */
-	public static function fromHtmlEntities($text)
-	{
-		$HTML_ENTITIES = [
+    public static function fromHtmlEntities($text)
+    {
+        $HTML_ENTITIES = [
             '&iexcl;'=>[194,161]  /*¡*/, '&cent;'=>[194,162]   /*¢*/, '&pound;'=>[194,163]  /*£*/, '&curren;'=>[194,164] /*¤*/,
             '&yen;'=>[194,165]    /*¥*/, '&brvbar;'=>[194,166] /*¦*/, '&sect;'=>[194,167]   /*§*/, '&uml;'=>[194,168]    /*¨*/,
             '&copy;'=>[194,169]   /*©*/, '&ordf;'=>[194,170]   /*ª*/, '&laquo;'=>[194,171]  /*«*/, '&not;'=>[194,172]    /*¬*/,
@@ -37,29 +38,25 @@ class ToUTF8
             '&otilde;'=>[195,181] /*õ*/, '&ouml;'=>[195,182]   /*ö*/, '&divide;'=>[195,183] /*÷*/, '&oslash;'=>[195,184] /*ø*/,
             '&ugrave;'=>[195,185] /*ù*/, '&uacute;'=>[195,186] /*ú*/, '&ucirc;'=>[195,187]  /*û*/, '&uuml;'=>[195,188]   /*ü*/,
             '&yacute;'=>[195,189] /*ý*/, '&thorn;'=>[195,190]  /*þ*/, '&yuml;'=>[195,191]   /*ÿ*/, '&utilde;'=>[197,169] /*ũ*/,
-            '&Utilde;'=>[197,168] /*Ũ*/,
-
+            '&Utilde;'=>[197,168] /*Ũ*/, '&nbsp;' => [194, 160] /* */
         ];
 
-		return ToUTF8::baseConversion($HTML_ENTITIES, $text);
-	}
+        return ToUTF8::baseConversion($HTML_ENTITIES, $text);
+    }
 
+    /**
+     * Base convert based on array
+     *
+     * @param string[] $vector
+     * @param string $text
+     * @return string
+     */
+    protected static function baseConversion($vector, $text)
+    {
+        foreach ($vector as $key => $value) {
+            $text = str_replace($key, chr($value[0]).chr($value[1]), $text);
+        }
 
-	/**
-	 * Base convert based on array
-	 *
-	 * @param string[] $vector
-	 * @param string $text
-	 * @return string
-	 */
-	protected static function baseConversion($vector, $text)
-	{
-		foreach ($vector as $key=>$value)
-		{
-			$text = str_replace($key, chr($value[0]).chr($value[1]), $text);
-		}
-
-		return $text;
-	}
-
+        return $text;
+    }
 }
