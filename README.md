@@ -22,9 +22,12 @@ echo $str3; // Joao
 $str4 = \ByJG\Convert\FromUTF8::toIso88591Email('João');
 echo $str4; // =?iso-8859-1?Q?Jo=E3o?=
 
+$str5 = \ByJG\Convert\FromUTF8::onlyAscii('Joãoﾠ');
+echo $str5; // Joao
+
 // https://en.wikipedia.org/wiki/Combining_character
-$str5 = \ByJG\Convert\ToUTF8::fromCombiningChar($combining);
-echo $str5; 
+$str6 = \ByJG\Convert\ToUTF8::fromCombiningChar($combining);
+echo $str6; 
 
 ``` 
 

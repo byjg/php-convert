@@ -115,6 +115,12 @@ class FromUTF8
         return FromUTF8::baseConversion($ASCII_CONV, $text);
     }
 
+    public static function onlyAscii($text, $defaultChar = '')
+    {
+        $textWOAccent = self::removeAccent($text);
+        return preg_replace('/[[:^print:]]/', $defaultChar, $textWOAccent);
+    }
+
     /**
      * Convert a text in UTF8 to ascii html entities
      *
