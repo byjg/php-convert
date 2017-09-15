@@ -29,9 +29,6 @@ class FromUTF8Test extends \PHPUnit\Framework\TestCase
 
     }
 
-    /**
-     * @covers ByJG\Convert\FromUTF8::toIso88591Email
-     */
     public function testToIso88591Email()
     {
         $this->assertEquals(
@@ -57,9 +54,6 @@ class FromUTF8Test extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @covers ByJG\Convert\FromUTF8::removeAccent
-     */
     public function testRemoveAccent()
     {
         $this->assertEquals(
@@ -73,8 +67,8 @@ class FromUTF8Test extends \PHPUnit\Framework\TestCase
         );
 
         $this->assertEquals(
-            "jUnior",
-            FromUTF8::removeAccent("jÚnior")
+            "jUnior😉",
+            FromUTF8::removeAccent("jÚnior😉")
         );
 
         $this->assertEquals(
@@ -88,10 +82,6 @@ class FromUTF8Test extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @covers ByJG\Convert\FromUTF8::toHtmlEntities
-     * @todo   Implement testToHtmlEntities().
-     */
     public function testToHtmlEntities()
     {
         $this->assertEquals(
@@ -120,9 +110,6 @@ class FromUTF8Test extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @covers ByJG\Convert\FromUTF8::onlyAscii
-     */
     public function testOnlyAscii()
     {
         $this->assertEquals(
@@ -133,6 +120,19 @@ class FromUTF8Test extends \PHPUnit\Framework\TestCase
         $this->assertEquals(
             "Liberte ???Egalite Fraternite????????????????????????????????????????????????????????????????",
             FromUTF8::onlyAscii("Liberte ﾠEgalite FraterniteƀƁƂƃƄƅƆƇƈƉƊƋƌƍƎƏƐƑƒƓƔƕƖƗƘƙƚƛƜƝƞƟ", '?')
+        );
+    }
+
+    public function testRemoveEmoji()
+    {
+        $this->assertEquals(
+            "Segue la tambem  artigos sobre o Canada ",
+            FromUTF8::onlyAscii("Segue lá também 😉 artigos sobre o Canadá 🙂")
+        );
+
+        $this->assertEquals(
+            "Segue lá também  artigos sobre o Canadá ",
+            FromUTF8::removeEmoji("Segue lá também 😉 artigos sobre o Canadá 🙂")
         );
     }
 
