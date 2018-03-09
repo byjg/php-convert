@@ -2,12 +2,9 @@
 
 namespace ByJG\Convert;
 
-// backward compatibility
-if (!class_exists('\PHPUnit\Framework\TestCase')) {
-    class_alias('\PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase');
-}
+use PHPUnit\Framework\TestCase;
 
-class ToUTF8Test extends \PHPUnit\Framework\TestCase
+class ToUTF8Test extends TestCase
 {
 
     /**
@@ -28,10 +25,6 @@ class ToUTF8Test extends \PHPUnit\Framework\TestCase
 
     }
 
-    /**
-     * @covers ByJG\Convert\ToUTF8::fromHtmlEntities
-     * @todo   Implement testFromHtmlEntities().
-     */
     public function testFromHtmlEntities()
     {
         $this->assertEquals(
