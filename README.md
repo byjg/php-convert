@@ -1,12 +1,13 @@
 # Convert
+
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg.com-brightgreen.svg)](http://opensource.byjg.com)
 [![Build Status](https://travis-ci.org/byjg/convert.svg)](https://travis-ci.org/byjg/convert)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461/mini.png)](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461)
 
-## Description
 
 A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa. 
 
-## Examples
+# Examples
 
 ```php
 <?php
@@ -31,12 +32,17 @@ echo $str6;
 
 ``` 
 
-## Install
+# Install
 
-Just type: `composer install "byjg/convert=1.0.*"`
+Just type: 
 
-## Running Tests
+```
+composer install "byjg/convert=1.0.*"
+```
+
+# Running Tests
 
 ```bash
 phpunit
 ```
+
