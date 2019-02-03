@@ -75,6 +75,13 @@ class FromUTF8
         }
     }
 
+    /**
+     * RFC 2047
+     *
+     * @param $text
+     * @param int $breakColumn
+     * @return string
+     */
     public static function toMimeEncodedWord($text, $breakColumn = 0)
     {
 //        // Fix break into the middle of the UTF8 char
