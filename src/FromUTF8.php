@@ -8,6 +8,7 @@ class FromUTF8
     /**
      * Convert a text in UTF8 to ISO-8859-1 used in emails.
      *
+     * @deprecated Use instead: toMimeEncodedWord
      * @param string $text
      * @param int $wrap
      * @return string
@@ -72,6 +73,35 @@ class FromUTF8
             $newResult .= "?=";
             return $newResult;
         }
+    }
+
+    public static function toMimeEncodedWord($text, $breakColumn = 0)
+    {
+//        // Fix break into the middle of the UTF8 char
+//        if ($breakColumn > 0) {
+//            $result = "";
+//            while (!empty($text)) {
+//                $result .= FromUTF8::toMimeEncodedWord(substr($text, 0, $breakColumn)) . "\n";
+//                $text = substr($text, $breakColumn);
+//            }
+//            return $result;
+//        }
+
+        $result = "";
+        for ($i = 0; $i < strlen($text); $i++) {
+            $decimal = ord($text[$i]);
+            if ($decimal > 127 || $decimal == 63) {
+                $result .= "=" . strtoupper(dechex($decimal));
+                continue;
+            }
+            $result .= $text[$i];
+        }
+
+        if ($result == $text) {
+            return $text;
+        }
+
+        return "=?utf-8?Q?" . str_replace(" ", "_", $result) . "?=";
     }
 
     /**
