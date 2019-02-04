@@ -77,23 +77,13 @@ class FromUTF8
 
     /**
      * RFC 2047
+     * https://sjohannes.wordpress.com/2009/05/18/utf-8-explained/
      *
      * @param $text
-     * @param int $breakColumn
      * @return string
      */
-    public static function toMimeEncodedWord($text, $breakColumn = 0)
+    public static function toMimeEncodedWord($text)
     {
-//        // Fix break into the middle of the UTF8 char
-//        if ($breakColumn > 0) {
-//            $result = "";
-//            while (!empty($text)) {
-//                $result .= FromUTF8::toMimeEncodedWord(substr($text, 0, $breakColumn)) . "\n";
-//                $text = substr($text, $breakColumn);
-//            }
-//            return $result;
-//        }
-
         $result = "";
         for ($i = 0; $i < strlen($text); $i++) {
             $decimal = ord($text[$i]);

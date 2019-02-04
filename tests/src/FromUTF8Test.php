@@ -72,11 +72,6 @@ class FromUTF8Test extends TestCase
             "=?utf-8?Q?=D0=AF=D0=BA_=D1=82=D0=B8_=D0=BF=D0=BE=D0=B6=D0=B8=D0=B2=D0=B0=D1=94=D1=88=3F?=",
             FromUTF8::toMimeEncodedWord(base64_decode("0K/QuiDRgtC4INC/0L7QttC40LLQsNGU0Yg/?="))
         );
-
-//        $this->assertEquals(
-//            "=?utf-8?Q?=D0=AF=D0=BA_=D1=82=D0=B8_=D0=BF=D0=BE=D0=B6=D0=B8=D0=B2=D0=B0=D1=94=D1=88=3F?=",
-//            FromUTF8::toMimeEncodedWord(base64_decode("0K/QuiDRgtC4INC/0L7QttC40LLQsNGU0Yg/?="), 5)
-//        );
     }
 
     public function testRemoveAccent()
