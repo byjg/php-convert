@@ -1,12 +1,6 @@
 {
   "name": "byjg/convert",
   "description": "A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa. ",
-  "authors": [
-    {
-      "name": "João Gilberto Magalhães",
-      "email": "joao@byjg.com.br"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "ByJG\\Convert\\": "src/"
