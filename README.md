@@ -1,13 +1,12 @@
 # Convert
 
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg.com-brightgreen.svg)](http://opensource.byjg.com)
-[![Build Status](https://travis-ci.org/byjg/convert.svg)](https://travis-ci.org/byjg/convert)
+[![Build Status](https://travis-ci.com/byjg/convert.svg)](https://travis-ci.com/byjg/convert)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461/mini.png)](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461)
 
+A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa.
 
-A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa. 
-
-# Examples
+## Examples
 
 ```php
 <?php
@@ -28,21 +27,19 @@ echo $str5; // Joao
 
 // https://en.wikipedia.org/wiki/Combining_character
 $str6 = \ByJG\Convert\ToUTF8::fromCombiningChar($combining);
-echo $str6; 
-
-``` 
-
-# Install
-
-Just type: 
-
-```
-composer install "byjg/convert=1.0.*"
+echo $str6;
 ```
 
-# Running Tests
+## Install
+
+Just type:
 
 ```bash
-phpunit
+composer install "byjg/convert=5.0.*"
 ```
 
+## Running Tests
+
+```bash
+vendor/bin/phpunit
+```
