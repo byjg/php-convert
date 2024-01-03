@@ -1,8 +1,10 @@
 # Convert
 
-[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg.com-brightgreen.svg)](http://opensource.byjg.com)
-[![Build Status](https://travis-ci.com/byjg/convert.svg)](https://travis-ci.com/byjg/convert)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461/mini.png)](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461)
+[![Build Status](https://github.com/byjg/convert/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/convert/actions/workflows/phpunit.yml) 
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/convert/) 
+[![GitHub license](https://img.shields.io/github/license/byjg/convert.svg)](https://opensource.byjg.com/opensource/licensing.html) 
+[![GitHub release](https://img.shields.io/github/release/byjg/convert.svg)](https://github.com/byjg/convert/releases/)
 
 A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa.
 
@@ -43,3 +45,12 @@ composer install "byjg/convert=5.0.*"
 ```bash
 vendor/bin/phpunit
 ```
+## Dependencies
+
+```mermaid  
+flowchart TD  
+    byjg/convert  
+```
+
+----  
+[Open source ByJG](http://opensource.byjg.com)
