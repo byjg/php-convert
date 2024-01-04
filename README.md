@@ -1,10 +1,10 @@
 # Convert
 
-[![Build Status](https://github.com/byjg/convert/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/convert/actions/workflows/phpunit.yml) 
+[![Build Status](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml) 
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
-[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/convert/) 
-[![GitHub license](https://img.shields.io/github/license/byjg/convert.svg)](https://opensource.byjg.com/opensource/licensing.html) 
-[![GitHub release](https://img.shields.io/github/release/byjg/convert.svg)](https://github.com/byjg/convert/releases/)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-convert/) 
+[![GitHub license](https://img.shields.io/github/license/byjg/php-convert.svg)](https://opensource.byjg.com/opensource/licensing.html) 
+[![GitHub release](https://img.shields.io/github/release/byjg/php-convert.svg)](https://github.com/byjg/php-convert/releases/)
 
 A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa.
 
@@ -37,7 +37,7 @@ echo $str6;
 Just type:
 
 ```bash
-composer install "byjg/convert=5.0.*"
+composer install "byjg/convert"
 ```
 
 ## Running Tests
@@ -45,6 +45,7 @@ composer install "byjg/convert=5.0.*"
 ```bash
 vendor/bin/phpunit
 ```
+
 ## Dependencies
 
 ```mermaid  
