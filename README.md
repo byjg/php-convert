@@ -1,13 +1,14 @@
 # Convert
 
-[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg.com-brightgreen.svg)](http://opensource.byjg.com)
-[![Build Status](https://travis-ci.org/byjg/convert.svg)](https://travis-ci.org/byjg/convert)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461/mini.png)](https://insight.sensiolabs.com/projects/8e4f8746-cfd9-4ad7-82e8-531cf4de2461)
+[![Build Status](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml) 
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-convert/) 
+[![GitHub license](https://img.shields.io/github/license/byjg/php-convert.svg)](https://opensource.byjg.com/opensource/licensing.html) 
+[![GitHub release](https://img.shields.io/github/release/byjg/php-convert.svg)](https://github.com/byjg/php-convert/releases/)
 
+A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa.
 
-A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa. 
-
-# Examples
+## Examples
 
 ```php
 <?php
@@ -28,21 +29,29 @@ echo $str5; // Joao
 
 // https://en.wikipedia.org/wiki/Combining_character
 $str6 = \ByJG\Convert\ToUTF8::fromCombiningChar($combining);
-echo $str6; 
-
-``` 
-
-# Install
-
-Just type: 
-
-```
-composer install "byjg/convert=1.0.*"
+echo $str6;
 ```
 
-# Running Tests
+## Install
+
+Just type:
 
 ```bash
-phpunit
+composer install "byjg/convert"
 ```
 
+## Running Tests
+
+```bash
+vendor/bin/phpunit
+```
+
+## Dependencies
+
+```mermaid  
+flowchart TD  
+    byjg/convert  
+```
+
+----  
+[Open source ByJG](http://opensource.byjg.com)

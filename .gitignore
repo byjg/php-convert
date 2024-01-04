@@ -3,3 +3,4 @@ nbproject/private
 composer.lock
 vendor
 .idea
+.phpunit.result.cache
