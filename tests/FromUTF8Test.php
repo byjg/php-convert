@@ -1,7 +1,8 @@
 <?php
 
-namespace ByJG\Convert;
+namespace Tests;
 
+use ByJG\Convert\FromUTF8;
 use PHPUnit\Framework\TestCase;
 
 class FromUTF8Test extends TestCase
