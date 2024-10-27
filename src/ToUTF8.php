@@ -11,7 +11,7 @@ class ToUTF8
      * @param string $text
      * @return string
      */
-    public static function fromHtmlEntities($text)
+    public static function fromHtmlEntities(string $text): string
     {
         $HTML_ENTITIES = [
             '&Agrave;' => [195,128]   /* À (Capital a with grave accent) */,
@@ -478,11 +478,11 @@ class ToUTF8
     /**
      * Base convert based on array
      *
-     * @param string[] $vector
+     * @param array $vector
      * @param string $text
      * @return string
      */
-    protected static function baseConversion($vector, $text)
+    protected static function baseConversion(array $vector, string $text): string
     {
         foreach ($vector as $key => $value) {
             $char = $value;
@@ -498,7 +498,7 @@ class ToUTF8
         return $text;
     }
 
-    public static function fromCombiningChar($text)
+    public static function fromCombiningChar(string $text): string
     {
         $HTML_ENTITIES = [
             'A' . chr(204) . chr(128) => [195, 128]   /*À*/,

@@ -8,12 +8,12 @@ class FromUTF8
     /**
      * Convert a text in UTF8 to ISO-8859-1 used in emails.
      *
-     * @deprecated Use instead: toMimeEncodedWord
      * @param string $text
      * @param int $wrap
      * @return string
+     *@deprecated Use instead: toMimeEncodedWord
      */
-    public static function toIso88591Email($text, $wrap = 0)
+    public static function toIso88591Email(string $text, int $wrap = 0): string
     {
         $ISO88591_CONV = [
             194 => [ // C2
@@ -82,7 +82,7 @@ class FromUTF8
      * @param $text
      * @return string
      */
-    public static function toMimeEncodedWord($text)
+    public static function toMimeEncodedWord($text): string
     {
         $result = "";
         for ($i = 0; $i < strlen($text); $i++) {
@@ -107,7 +107,7 @@ class FromUTF8
      * @param string $text
      * @return string
      */
-    public static function removeAccent($text)
+    public static function removeAccent(string $text): string
     {
         $ASCII_CONV = [
             194 => [
@@ -1596,7 +1596,7 @@ class FromUTF8
      * @param string $text
      * @return string
      */
-    public static function toHtmlEntities($text)
+    public static function toHtmlEntities(string $text): string
     {
         $ASCII_CONV = [
             195 => [
@@ -1873,11 +1873,11 @@ class FromUTF8
     /**
      * Base conversion
      *
-     * @param string[] $vector
+     * @param array $vector
      * @param string $text
      * @return string
      */
-    protected static function baseConversion($vector, $text)
+    protected static function baseConversion(array $vector, string $text): string
     {
         $result = "";
         $lenText = strlen($text);
@@ -1887,13 +1887,11 @@ class FromUTF8
                 $first = ord($text[$i++]);
                 $second = ord($text[$i++]);
                 $result .=
-                    isset($vector[$first][$second][ord($text[$i])])
-                        ? $vector[$first][$second][ord($text[$i])]
-                        : '?'
+                    $vector[$first][$second][ord($text[$i])] ?? '?'
                 ;
             } elseif (in_array(ord($text[$i]), $keys)) {
                 $first = ord($text[$i++]);
-                $result .= isset($vector[$first][ord($text[$i])]) ? $vector[$first][ord($text[$i])] : '?';
+                $result .= $vector[$first][ord($text[$i])] ?? '?';
             } else {
                 $result .= $text[$i];
             }

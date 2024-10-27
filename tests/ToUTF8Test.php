@@ -1,7 +1,8 @@
 <?php
 
-namespace ByJG\Convert;
+namespace Tests;
 
+use ByJG\Convert\ToUTF8;
 use PHPUnit\Framework\TestCase;
 
 class ToUTF8Test extends TestCase
@@ -31,7 +32,7 @@ class ToUTF8Test extends TestCase
 
     public function testCombiningChar()
     {
-        $fileCombining = file_get_contents(__DIR__ . "/../sample.txt");
+        $fileCombining = file_get_contents(__DIR__ . "/sample.txt");
 
         $fileRemovedCombining = ToUTF8::fromCombiningChar($fileCombining);
 
