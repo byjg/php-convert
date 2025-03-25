@@ -79,7 +79,7 @@ class FromUTF8
      * RFC 2047
      * https://sjohannes.wordpress.com/2009/05/18/utf-8-explained/
      *
-     * @param $text
+     * @param string $text
      * @return string
      */
     public static function toMimeEncodedWord(string $text): string

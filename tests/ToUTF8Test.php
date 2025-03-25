@@ -98,4 +98,55 @@ class ToUTF8Test extends TestCase
 
         $this->assertEquals($text1, ToUTF8::fromHtmlEntities($text2));
     }
+
+    public function testFromEmoji(): void
+    {
+        // Test basic emoticons
+        $this->assertEquals(
+            "Hello 😊 How are you? 😃",
+            ToUTF8::fromEmoji("Hello :) How are you? :D")
+        );
+
+        // Test multiple emoticons in sequence
+        $this->assertEquals(
+            "I'm 😢 but also 😊 and then 😆",
+            ToUTF8::fromEmoji("I'm :'( but also :) and then XD")
+        );
+
+        // Test emoticons with nose variants
+        $this->assertEquals(
+            "Both 😊 and 😊 should work",
+            ToUTF8::fromEmoji("Both :-) and :) should work")
+        );
+
+        // Test special emoticons
+        $this->assertEquals(
+            "Love you ❤️ but my heart is 💔",
+            ToUTF8::fromEmoji("Love you <3 but my heart is </3")
+        );
+
+        // Test case sensitivity and similar emoticons
+        $this->assertEquals(
+            "Sealed 🤐 and 🤐 and 🤐",
+            ToUTF8::fromEmoji("Sealed :X and :x and :-X")
+        );
+
+        // Test emoticons with special characters
+        $this->assertEquals(
+            "Cat 😺 and happy cat 😺",
+            ToUTF8::fromEmoji("Cat :3 and happy cat =^.^=")
+        );
+
+        // Test text without emoticons
+        $this->assertEquals(
+            "Plain text without emoticons!",
+            ToUTF8::fromEmoji("Plain text without emoticons!")
+        );
+
+        // Test emoticons with surrounding text
+        $this->assertEquals(
+            "Hey😊there😃how😢are😆you",
+            ToUTF8::fromEmoji("Hey:)there:Dhow:'(areXDyou")
+        );
+    }
 }
