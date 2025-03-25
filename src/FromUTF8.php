@@ -82,7 +82,7 @@ class FromUTF8
      * @param $text
      * @return string
      */
-    public static function toMimeEncodedWord($text): string
+    public static function toMimeEncodedWord(string $text): string
     {
         $result = "";
         for ($i = 0; $i < strlen($text); $i++) {
@@ -142,7 +142,7 @@ class FromUTF8
         return FromUTF8::baseConversion($ASCII_CONV, $text);
     }
 
-    public static function removeEmoji($text)
+    public static function removeEmoji(string $text): string
     {
         $emoji = [
             "\xF0\x9F\x91\xA8\xE2\x80\x8D\xE2\x9D\xA4\xEF\xB8\x8F\xE2\x80\x8D\xF0\x9F\x92\x8B\xE2\x80\x8D\xF0\x9F\x91\xA8",
@@ -1583,7 +1583,7 @@ class FromUTF8
         return str_replace($emoji, '', $text);
     }
 
-    public static function onlyAscii($text, $defaultChar = '')
+    public static function onlyAscii(string $text, string $defaultChar = ''): ?string
     {
         $text = self::removeEmoji($text);
         $textWOAccent = self::removeAccent($text);

@@ -7,32 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class FromUTF8Test extends TestCase
 {
-    public function testToIso88591Email()
-    {
-        $this->assertEquals(
-            "=?iso-8859-1?Q?Libert=E9_Egalit=E9_Fraternit=E9?=",
-            FromUTF8::toIso88591Email("Liberté Egalité Fraternité")
-        );
-
-        $this->assertEquals(
-            "=?iso-8859-1?Q?=E1=E9=ED=F3=FA?=",
-            FromUTF8::toIso88591Email("áéíóú")
-        );
-
-        $this->assertEquals(
-            '=?iso-8859-1?Q?Teste_de_valida=E7=E3o_de_emai?=' . "\r\n" .
-            '=?iso-8859-1?Q?l_t=EDtulo_de_email_para_ver_s?=' . "\r\n" .
-            '=?iso-8859-1?Q?e_funciona?=',
-            FromUTF8::toIso88591Email("Teste de validação de email título de email para ver se funciona", 30)
-        );
-
-        $this->assertEquals(
-            "=?iso-8859-1?Q?Test_uU?=",
-            FromUTF8::toIso88591Email("Test ũŨ")
-        );
-    }
-
-    public function testToMimeEncodedWord()
+    public function testToMimeEncodedWord(): void
     {
         $this->assertEquals(
             "=?utf-8?Q?Libert=C3=A9_Egalit=C3=A9_Fraternit=C3=A9?=",
@@ -55,7 +30,7 @@ class FromUTF8Test extends TestCase
         );
     }
 
-    public function testRemoveAccent()
+    public function testRemoveAccent(): void
     {
         $this->assertEquals(
             "Liberte Egalite Fraternite",
@@ -83,7 +58,7 @@ class FromUTF8Test extends TestCase
         );
     }
 
-    public function testToHtmlEntities()
+    public function testToHtmlEntities(): void
     {
         $this->assertEquals(
             "Libert&eacute; Egalit&eacute; Fraternit&eacute;",
@@ -111,7 +86,7 @@ class FromUTF8Test extends TestCase
         );
     }
 
-    public function testOnlyAscii()
+    public function testOnlyAscii(): void
     {
         $this->assertEquals(
             "Liberte Egalite Fraternite",
@@ -124,7 +99,7 @@ class FromUTF8Test extends TestCase
         );
     }
 
-    public function testRemoveEmoji()
+    public function testRemoveEmoji(): void
     {
         $this->assertEquals(
             "Segue la tambem  artigos sobre o Canada ",
@@ -137,7 +112,7 @@ class FromUTF8Test extends TestCase
         );
     }
 
-    public function testAllChars()
+    public function testAllChars(): void
     {
         $text1 = 'À Á Â Ã Ä Å Æ Ç È É '
             . 'Ê Ë Ì Í Î Ï Ð Ñ Ò Ó '

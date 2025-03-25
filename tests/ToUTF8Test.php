@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ToUTF8Test extends TestCase
 {
-    public function testFromHtmlEntities()
+    public function testFromHtmlEntities(): void
     {
         $this->assertEquals(
             "Liberté Egalité Fraternité",
@@ -30,7 +30,7 @@ class ToUTF8Test extends TestCase
         );
     }
 
-    public function testCombiningChar()
+    public function testCombiningChar(): void
     {
         $fileCombining = file_get_contents(__DIR__ . "/sample.txt");
 
@@ -46,7 +46,7 @@ class ToUTF8Test extends TestCase
         );
     }
 
-    public function testAllChars()
+    public function testAllChars(): void
     {
         $text1 = 'À Á Â Ã Ä Å Æ Ç È É '
             . 'Ê Ë Ì Í Î Ï Ð Ñ Ò Ó '
