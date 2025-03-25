@@ -1,7 +1,7 @@
 <?php
 
-$var =
-    "À	&Agrave;	&#192;	Capital a with grave accent
+$var = <<<EOD
+À	&Agrave;	&#192;	Capital a with grave accent
 Á	&Aacute;	&#193;	Capital a with acute accent
 Â	&Acirc;	&#194;	Capital a with circumflex accent
 Ã	&Atilde;	&#195;	Capital a with tilde
@@ -14,13 +14,13 @@ $var =
 Ê	&Ecirc;	&#202;	Capital e with circumflex accent
 Ë	&Euml;	&#203;	Capital e with umlaut
 Ì	&Igrave;	&#204;	Capital i with grave accent
-Í	&Iacute;	&#205;	Capital i with accute accent
+Í	&Iacute;	&#205;	Capital i with acute accent
 Î	&Icirc;	&#206;	Capital i with circumflex accent
 Ï	&Iuml;	&#207;	Capital i with umlaut
 Ð	&ETH;	&#208;	Capital eth (Icelandic)
 Ñ	&Ntilde;	&#209;	Capital n with tilde
 Ò	&Ograve;	&#210;	Capital o with grave accent
-Ó	&Oacute;	&#211;	Capital o with accute accent
+Ó	&Oacute;	&#211;	Capital o with acute accent
 Ô	&Ocirc;	&#212;	Capital o with circumflex accent
 Õ	&Otilde;	&#213;	Capital o with tilde
 Ö	&Ouml;	&#214;	Capital o with umlaut
@@ -29,7 +29,7 @@ $var =
 Ú	&Uacute;	&#218;	Capital u with acute accent
 Û	&Ucirc;	&#219;	Capital u with circumflex accent
 Ü	&Uuml;	&#220;	Capital u with umlaut
-Ũ	&Utilde;		Capital u with tilde accent
+Ũ	&Utilde;	&#360;	Capital u with tilde accent
 Ý	&Yacute;	&#221;	Capital y with acute accent
 Þ	&THORN;	&#222;	Capital thorn (Icelandic)
 ß	&szlig;	&#223;	Lowercase sharp s (German)
@@ -61,7 +61,7 @@ $var =
 ú	&uacute;	&#250;	Lowercase u with acute accent
 û	&ucirc;	&#251;	Lowercase u with circumflex accent
 ü	&uuml;	&#252;	Lowercase u with umlaut
-ũ	&utilde;		Lowercase u with tilde accent
+ũ	&utilde;	&#361;	Lowercase u with tilde accent
 ý	&yacute;	&#253;	Lowercase y with acute accent
 þ	&thorn;	&#254;	Lowercase thorn (Icelandic)
 ÿ	&yuml;	&#255;	Lowercase y with umlaut
@@ -120,7 +120,7 @@ $var =
 ∫	&int;	&#8747;	Integral
 ∴	&there4;	&#8756;	Therefore
 ∼	&sim;	&#8764;	Similar to
-≅	&cong;	&#8773;	Congurent to
+≅	&cong;	&#8773;	Congruent to
 ≈	&asymp;	&#8776;	Almost equal
 ≠	&ne;	&#8800;	Not equal
 ≡	&equiv;	&#8801;	Equivalent
@@ -229,4 +229,5 @@ $var =
 ♠	&spades;	&#9824;	Spade
 ♣	&clubs;	&#9827;	Club
 ♥	&hearts;	&#9829;	Heart
-♦	&diams;	&#9830;	Diamond";
+♦	&diams;	&#9830;	Diamond
+EOD;
