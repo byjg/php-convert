@@ -12,5 +12,5 @@ $str3 = \ByJG\Convert\FromUTF8::removeAccent('João');
 echo $str3; // Joao
 
 $str4 = \ByJG\Convert\FromUTF8::toMimeEncodedWord('João');
-echo $str4; // =?utf-8?Q?Jo=C3=A3o?=
+echo $str4; // =?utf-8?Q?Jo=C3=A3o?= (MIME encoding for email headers with non-ASCII chars)
 

@@ -52,5 +52,5 @@ B)	😎	Cool face with sunglasses
 B-)	😎	Cool face with sunglasses
 \o/	🙌	Hands up in celebration
 o/	👋	Waving hand
-\o	��	Waving hand
+\o	👋	Waving hand
 EOD; 

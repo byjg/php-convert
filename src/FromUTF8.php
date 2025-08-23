@@ -85,7 +85,8 @@ class FromUTF8
     public static function toMimeEncodedWord(string $text): string
     {
         $result = "";
-        for ($i = 0; $i < strlen($text); $i++) {
+        $length = strlen($text);
+        for ($i = 0; $i < $length; $i++) {
             $decimal = ord($text[$i]);
             if ($decimal > 127 || $decimal == 63) {
                 $result .= "=" . strtoupper(dechex($decimal));
