@@ -17,9 +17,15 @@ A lightweight utility for string conversion between text from UTF8 to various fo
 - Convert text to MIME encoded words (RFC 2047)
 - Remove emoji characters
 - Convert to ASCII-only text
-- Email-safe ISO-8859-1 conversion
 
-## Examples
+## Documentation
+
+- [Converting to UTF8](docs/converting-to-utf8.md) - Convert from HTML entities, emoticons, and combining characters
+- [Converting from UTF8](docs/converting-from-utf8.md) - Convert to HTML entities, remove accents and emoji, ASCII conversion
+- [Installation](docs/installation.md) - How to install and set up the library
+- [Examples](docs/examples.md) - Real-world usage examples and common patterns
+
+## Quick Start
 
 ```php
 <?php
@@ -35,7 +41,7 @@ echo $str2; // Jo&atilde;o
 $str3 = \ByJG\Convert\FromUTF8::removeAccent('João');
 echo $str3; // Joao
 
-// Convert to MIME encoded word
+// Convert to MIME encoded word (for email headers)
 $str4 = \ByJG\Convert\FromUTF8::toMimeEncodedWord('João');
 echo $str4; // =?utf-8?Q?Jo=C3=A3o?=
 
@@ -43,33 +49,16 @@ echo $str4; // =?utf-8?Q?Jo=C3=A3o?=
 $str5 = \ByJG\Convert\FromUTF8::onlyAscii('João');
 echo $str5; // Joao
 
-// Handle combining characters
-$str6 = \ByJG\Convert\ToUTF8::fromCombiningChar($combining);
-echo $str6; // Converts combining characters to proper UTF8
-
 // Convert ASCII emoticons to emoji
-$str7 = \ByJG\Convert\ToUTF8::fromEmoji('Hello :) How are you? :D');
-echo $str7; // Hello 😊 How are you? 😃
-
-// More complex emoticon examples
-$str8 = \ByJG\Convert\ToUTF8::fromEmoji('I love you <3 but my heart is </3');
-echo $str8; // I love you ❤️ but my heart is 💔
+$str6 = \ByJG\Convert\ToUTF8::fromEmoji('Hello :) How are you? :D');
+echo $str6; // Hello 😊 How are you? 😃
 
 // Remove emoji characters
-$str9 = \ByJG\Convert\FromUTF8::removeEmoji('Hello 👋 World 🌍');
-echo $str9; // Hello World
+$str7 = \ByJG\Convert\FromUTF8::removeEmoji('Hello 👋 World 🌍');
+echo $str7; // Hello  World
 ```
 
-### Supported Emoticons
-
-The `fromEmoji` method supports a wide range of ASCII emoticons including:
-
-- Basic smileys: `:)` `:-)` `:D` `:-D` `:(` `:-(` `;)` `;-)`
-- Emotions: `XD` `:O` `:-O` `:o` `>:(` `:3` `:*` `:')`
-- Hearts: `<3` `</3`
-- Special faces: `O:)` `>:)` `:S` `:$` `:@` `:|` `:X`
-- Eastern style: `-_-` `^_^` `>_<` `._.'`
-- Actions: `\o/` `o/` `\o`
+For more examples and detailed documentation, see the [Examples](docs/examples.md) page.
 
 ## Install
 
