@@ -79,13 +79,14 @@ class FromUTF8
      * RFC 2047
      * https://sjohannes.wordpress.com/2009/05/18/utf-8-explained/
      *
-     * @param $text
+     * @param string $text
      * @return string
      */
-    public static function toMimeEncodedWord($text): string
+    public static function toMimeEncodedWord(string $text): string
     {
         $result = "";
-        for ($i = 0; $i < strlen($text); $i++) {
+        $length = strlen($text);
+        for ($i = 0; $i < $length; $i++) {
             $decimal = ord($text[$i]);
             if ($decimal > 127 || $decimal == 63) {
                 $result .= "=" . strtoupper(dechex($decimal));
@@ -142,7 +143,7 @@ class FromUTF8
         return FromUTF8::baseConversion($ASCII_CONV, $text);
     }
 
-    public static function removeEmoji($text)
+    public static function removeEmoji(string $text): string
     {
         $emoji = [
             "\xF0\x9F\x91\xA8\xE2\x80\x8D\xE2\x9D\xA4\xEF\xB8\x8F\xE2\x80\x8D\xF0\x9F\x92\x8B\xE2\x80\x8D\xF0\x9F\x91\xA8",
@@ -1583,7 +1584,7 @@ class FromUTF8
         return str_replace($emoji, '', $text);
     }
 
-    public static function onlyAscii($text, $defaultChar = '')
+    public static function onlyAscii(string $text, string $defaultChar = ''): ?string
     {
         $text = self::removeEmoji($text);
         $textWOAccent = self::removeAccent($text);
@@ -1613,13 +1614,13 @@ class FromUTF8
                 138 => '&Ecirc;'  /* Ê (Capital e with circumflex accent) */,
                 139 => '&Euml;'  /* Ë (Capital e with umlaut) */,
                 140 => '&Igrave;'  /* Ì (Capital i with grave accent) */,
-                141 => '&Iacute;'  /* Í (Capital i with accute accent) */,
+                141 => '&Iacute;'  /* Í (Capital i with acute accent) */,
                 142 => '&Icirc;'  /* Î (Capital i with circumflex accent) */,
                 143 => '&Iuml;'  /* Ï (Capital i with umlaut) */,
                 144 => '&ETH;'  /* Ð (Capital eth (Icelandic)) */,
                 145 => '&Ntilde;'  /* Ñ (Capital n with tilde) */,
                 146 => '&Ograve;'  /* Ò (Capital o with grave accent) */,
-                147 => '&Oacute;'  /* Ó (Capital o with accute accent) */,
+                147 => '&Oacute;'  /* Ó (Capital o with acute accent) */,
                 148 => '&Ocirc;'  /* Ô (Capital o with circumflex accent) */,
                 149 => '&Otilde;'  /* Õ (Capital o with tilde) */,
                 150 => '&Ouml;'  /* Ö (Capital o with umlaut) */,
@@ -1732,7 +1733,7 @@ class FromUTF8
                     188 => '&sim;'  /* ∼ (Similar to) */,
                 ],
                 137  => [
-                    133 => '&cong;'  /* ≅ (Congurent to) */,
+                    133 => '&cong;'  /* ≅ (Congruent to) */,
                     136 => '&asymp;'  /* ≈ (Almost equal) */,
                     160 => '&ne;'  /* ≠ (Not equal) */,
                     161 => '&equiv;'  /* ≡ (Equivalent) */,

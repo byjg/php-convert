@@ -40,8 +40,8 @@ class ToUTF8
             '&#203;' => [195,139]   /* Ë (Capital e with umlaut) */,
             '&Igrave;' => [195,140]   /* Ì (Capital i with grave accent) */,
             '&#204;' => [195,140]   /* Ì (Capital i with grave accent) */,
-            '&Iacute;' => [195,141]   /* Í (Capital i with accute accent) */,
-            '&#205;' => [195,141]   /* Í (Capital i with accute accent) */,
+            '&Iacute;' => [195,141]   /* Í (Capital i with acute accent) */,
+            '&#205;' => [195,141]   /* Í (Capital i with acute accent) */,
             '&Icirc;' => [195,142]   /* Î (Capital i with circumflex accent) */,
             '&#206;' => [195,142]   /* Î (Capital i with circumflex accent) */,
             '&Iuml;' => [195,143]   /* Ï (Capital i with umlaut) */,
@@ -52,8 +52,8 @@ class ToUTF8
             '&#209;' => [195,145]   /* Ñ (Capital n with tilde) */,
             '&Ograve;' => [195,146]   /* Ò (Capital o with grave accent) */,
             '&#210;' => [195,146]   /* Ò (Capital o with grave accent) */,
-            '&Oacute;' => [195,147]   /* Ó (Capital o with accute accent) */,
-            '&#211;' => [195,147]   /* Ó (Capital o with accute accent) */,
+            '&Oacute;' => [195,147]   /* Ó (Capital o with acute accent) */,
+            '&#211;' => [195,147]   /* Ó (Capital o with acute accent) */,
             '&Ocirc;' => [195,148]   /* Ô (Capital o with circumflex accent) */,
             '&#212;' => [195,148]   /* Ô (Capital o with circumflex accent) */,
             '&Otilde;' => [195,149]   /* Õ (Capital o with tilde) */,
@@ -71,6 +71,7 @@ class ToUTF8
             '&Uuml;' => [195,156]   /* Ü (Capital u with umlaut) */,
             '&#220;' => [195,156]   /* Ü (Capital u with umlaut) */,
             '&Utilde;' => [197,168]   /* Ũ (Capital u with tilde accent) */,
+            '&#360;' => [197,168]   /* Ũ (Capital u with tilde accent) */,
             '&Yacute;' => [195,157]   /* Ý (Capital y with acute accent) */,
             '&#221;' => [195,157]   /* Ý (Capital y with acute accent) */,
             '&THORN;' => [195,158]   /* Þ (Capital thorn (Icelandic)) */,
@@ -134,6 +135,7 @@ class ToUTF8
             '&uuml;' => [195,188]   /* ü (Lowercase u with umlaut) */,
             '&#252;' => [195,188]   /* ü (Lowercase u with umlaut) */,
             '&utilde;' => [197,169]   /* ũ (Lowercase u with tilde accent) */,
+            '&#361;' => [197,169]   /* ũ (Lowercase u with tilde accent) */,
             '&yacute;' => [195,189]   /* ý (Lowercase y with acute accent) */,
             '&#253;' => [195,189]   /* ý (Lowercase y with acute accent) */,
             '&thorn;' => [195,190]   /* þ (Lowercase thorn (Icelandic)) */,
@@ -250,8 +252,8 @@ class ToUTF8
             '&#8756;' => [226,136,180]   /* ∴ (Therefore) */,
             '&sim;' => [226,136,188]   /* ∼ (Similar to) */,
             '&#8764;' => [226,136,188]   /* ∼ (Similar to) */,
-            '&cong;' => [226,137,133]   /* ≅ (Congurent to) */,
-            '&#8773;' => [226,137,133]   /* ≅ (Congurent to) */,
+            '&cong;' => [226,137,133]   /* ≅ (Congruent to) */,
+            '&#8773;' => [226,137,133]   /* ≅ (Congruent to) */,
             '&asymp;' => [226,137,136]   /* ≈ (Almost equal) */,
             '&#8776;' => [226,137,136]   /* ≈ (Almost equal) */,
             '&ne;' => [226,137,160]   /* ≠ (Not equal) */,
@@ -559,5 +561,71 @@ class ToUTF8
         ];
 
         return ToUTF8::baseConversion($HTML_ENTITIES, $text);
+    }
+
+    /**
+     * Convert ASCII emoticons to their corresponding emoji characters
+     *
+     * @param string $text The text containing emoticons to convert
+     * @return string The text with emoticons converted to emoji
+     */
+    public static function fromEmoji(string $text): string
+    {
+        $EMOTICONS = [
+            ':-)' => '😊',   /* Basic smiley face */
+            ':)' => '😊',    /* Simple smiley face */
+            ':D' => '😃',    /* Big grin face */
+            ':-D' => '😃',   /* Big grin face */
+            ':(' => '☹️',    /* Sad face */
+            ':-(' => '☹️',   /* Sad face */
+            ';)' => '😉',    /* Winking face */
+            ';-)' => '😉',   /* Winking face */
+            ':P' => '😛',    /* Sticking tongue out */
+            ':-P' => '😛',   /* Sticking tongue out */
+            ':p' => '😛',    /* Sticking tongue out */
+            'XD' => '😆',    /* Laughing with closed eyes */
+            ':O' => '😮',    /* Surprised face */
+            ':-O' => '😮',   /* Surprised face */
+            ':o' => '😮',    /* Surprised face */
+            '>:(' => '😠',   /* Angry face */
+            '>:-(' => '😠',  /* Angry face */
+            ':3' => '😺',    /* Cat face */
+            '=^.^=' => '😺', /* Happy cat face */
+            '<3' => '❤️',    /* Heart */
+            '</3' => '💔',   /* Broken heart */
+            ':*' => '😘',    /* Kissing face */
+            ':-*' => '😘',   /* Kissing face */
+            ":')" => '😂',   /* Tears of joy */
+            ":'-)" => '😂',  /* Tears of joy */
+            ":'(" => '😢',   /* Crying face */
+            ":'-(" => '😢',  /* Crying face */
+            '-_-' => '😑',   /* Expressionless face */
+            '^_^' => '😊',   /* Happy face (Eastern style) */
+            '>_<' => '😣',   /* Frustrated face */
+            '._.' => '😐',   /* Neutral face */
+            ':v' => '😃',    /* Pacman */
+            'O:)' => '😇',   /* Angel face */
+            'O:-)' => '😇',  /* Angel face */
+            '>:)' => '😈',   /* Evil grin */
+            '>:-)' => '😈',  /* Evil grin */
+            ':S' => '😕',    /* Confused face */
+            ':-S' => '😕',   /* Confused face */
+            ':$' => '😳',    /* Blushing face */
+            ':-$' => '😳',   /* Blushing face */
+            ':@' => '😠',    /* Angry face */
+            ':-@' => '😠',   /* Angry face */
+            ':|' => '😐',    /* Straight face */
+            ':-|' => '😐',   /* Straight face */
+            ':X' => '🤐',    /* Sealed lips */
+            ':-X' => '🤐',   /* Sealed lips */
+            ':x' => '🤐',    /* Sealed lips */
+            'B)' => '😎',    /* Cool face with sunglasses */
+            'B-)' => '😎',   /* Cool face with sunglasses */
+            '\o/' => '🙌',   /* Hands up in celebration */
+            'o/' => '👋',    /* Waving hand */
+            '\o' => '👋'     /* Waving hand */
+        ];
+
+        return ToUTF8::baseConversion($EMOTICONS, $text);
     }
 }
