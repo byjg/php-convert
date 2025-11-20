@@ -1,6 +1,6 @@
 {
   "name": "byjg/convert",
-  "description": "A lightweight utility for string conversion between text from UTF8 to a lot of formats and vice-versa. ",
+  "description": "A lightweight utility for string conversion between text from UTF8 to various formats and vice-versa. Supports HTML entities, MIME encoded words, accents removal, emoji conversion, and more.",
   "autoload": {
     "psr-4": {
       "ByJG\\Convert\\": "src/"
@@ -12,10 +12,10 @@
     }
   },
   "require": {
-    "php": ">=8.1 <8.6"
+    "php": ">=8.3 <8.6"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.6|^11",
+    "phpunit/phpunit": "^9.6|^11.5",
     "vimeo/psalm": "^5.9|^6.13"
   },
   "prefer-stable": true,
