@@ -1,10 +1,4 @@
----
-tags: [php, text-manipulation]
----
-
 # String Conversion Utility
-
-A lightweight utility for string conversion between text from UTF8 to various formats and vice-versa. Supports HTML entities, MIME encoded words, accents removal, emoji conversion, and more.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml)
@@ -12,6 +6,8 @@ A lightweight utility for string conversion between text from UTF8 to various fo
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-convert/)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-convert.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-convert.svg)](https://github.com/byjg/php-convert/releases/)
+
+A lightweight utility for string conversion between text from UTF8 to various formats and vice-versa. Supports HTML entities, MIME encoded words, accents removal, emoji conversion, and more.
 
 ## Features
 
@@ -25,10 +21,10 @@ A lightweight utility for string conversion between text from UTF8 to various fo
 
 ## Documentation
 
-- [Converting to UTF8](converting-to-utf8) - Convert from HTML entities, emoticons, and combining characters
-- [Converting from UTF8](converting-from-utf8) - Convert to HTML entities, remove accents and emoji, ASCII conversion
-- [Installation](installation) - How to install and set up the library
-- [Examples](examples) - Real-world usage examples and common patterns
+- [Converting to UTF8](docs/converting-to-utf8.md) - Convert from HTML entities, emoticons, and combining characters
+- [Converting from UTF8](docs/converting-from-utf8.md) - Convert to HTML entities, remove accents and emoji, ASCII conversion
+- [Installation](docs/installation.md) - How to install and set up the library
+- [Examples](docs/examples.md) - Real-world usage examples and common patterns
 
 ## Quick Start
 
@@ -63,7 +59,7 @@ $str7 = \ByJG\Convert\FromUTF8::removeEmoji('Hello 👋 World 🌍');
 echo $str7; // Hello  World
 ```
 
-For more examples and detailed documentation, see the [Examples](examples) page.
+For more examples and detailed documentation, see the [Examples](docs/examples.md) page.
 
 ## Install
 
