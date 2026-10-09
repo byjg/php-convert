@@ -21,17 +21,18 @@ echo $str; // João
 
 ### Supported Entities
 
-This method supports:
-- All ISO-8859-1 HTML entities (&aacute;, &ntilde;, etc.)
-- Numeric HTML entities (&#225;, &#241;, etc.)
-- Greek alphabet entities (&alpha;, &beta;, etc.)
-- Mathematical symbols (&sum;, &infin;, &nabla;, etc.)
-- Special characters (&euro;, &trade;, &copy;, etc.)
-- Arrow symbols (&larr;, &rarr;, etc.)
+Every entity HTML5 defines, plus numeric ones: it is
+`html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8')`.
+- Named entities (`&aacute;`, `&amp;`, `&lt;`, `&quot;`, `&nbsp;`, `&euro;`, …)
+- Decimal entities (`&#225;`)
+- Hexadecimal entities (`&#xE1;`)
 
 ## fromCombiningChar
 
 Convert combining character sequences to proper UTF-8 characters. Combining characters are Unicode characters that modify the preceding character (like adding an accent).
+
+It applies the Unicode Normalization Form C (NFC) with `Normalizer::normalize()`, so it works for
+every letter and mark Unicode can compose, not only the Latin-1 ones (`z` + `ˇ` → `ž`).
 
 ```php
 $combining = 'A' . chr(204) . chr(128); // A + combining grave accent
@@ -108,6 +109,6 @@ echo $str; // 😆 😛 😉 ☹️ 😇 😠
 
 ### Notes
 
-- Longer emoticons (like `:-D`) are matched before shorter ones (like `:D`)
+- Longer emoticons are matched before shorter ones, so `>:(` is 😠 and not `>` followed by ☹️
 - Emoticons are case-sensitive for some variants (e.g., `XD` vs `xd`)
 - The conversion is a simple string replacement, so emoticons within words may also be converted
