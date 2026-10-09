@@ -7,6 +7,7 @@ sidebar_position: 3
 ## Requirements
 
 - PHP 8.3 or higher
+- The `intl` and `mbstring` extensions
 - Composer
 
 ## Install via Composer

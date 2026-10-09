@@ -140,9 +140,9 @@ $userName = "José María";
 $asciiName = FromUTF8::onlyAscii($userName);
 echo $asciiName; // Jose Maria
 
-// Or replace unsupported chars with placeholder
-$asciiWithPlaceholder = FromUTF8::onlyAscii($userName, '?');
-echo $asciiWithPlaceholder; // Jos? Mar?a
+// Characters with no ASCII form can be replaced with a placeholder
+$asciiWithPlaceholder = FromUTF8::onlyAscii("José 世界", '?');
+echo $asciiWithPlaceholder; // Jose ??
 ```
 
 ### File Naming
@@ -204,7 +204,7 @@ Handle text from systems that use combining diacritics:
 use ByJG\Convert\ToUTF8;
 
 // Text with combining characters (NFD normalization)
-$combining = "José" ; // J + o + s + e + combining acute accent
+$combining = "Jose\u{0301}"; // J + o + s + e + combining acute accent
 
 // Convert to composed characters (NFC normalization)
 $composed = ToUTF8::fromCombiningChar($combining);
