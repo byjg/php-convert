@@ -19,6 +19,16 @@
 
 - **`FromUTF8::removeAccent()`** writes the letters with no accented form correctly: `ß` → `ss`,
   `Ø`/`ø` → `O`/`o`, `Þ`/`þ` → `TH`/`th`, `ð` → `d` (they were `B`, `0`, `P`/`p` and `o`).
+- **`FromUTF8::removeAccent()`** works on every Latin letter, not only the Latin-1 ones, using the
+  Unicode decomposition (`Normalizer`): `Škoda Dvořák Việt Nam` → `Skoda Dvorak Viet Nam` (it was
+  `?koda Dvo?ak Việt Nam`). A letter followed by a combining mark (`e` + U+0301) loses the mark too.
+  `Œ`/`œ`, `Ł`/`ł`, `Đ`/`đ` and `ı` are written as `OE`/`oe`, `L`/`l`, `D`/`d` and `i`.
+
+  What it does not convert is now left as it is instead of becoming `?`: other scripts, symbols such
+  as `€`, `✓`, `“` and `–`, and the emoji `☹️` and `❤️`. A text that is not valid UTF-8 is returned
+  unchanged. `onlyAscii()` therefore replaces those characters with its own `$defaultChar`:
+  `onlyAscii('€5')` returns `5`, not `?5`.
+- The protected `FromUTF8::baseConversion()` was removed with the byte table it walked.
 - **`FromUTF8::onlyAscii()`** replaces each character with one `$defaultChar`: `onlyAscii('世界', '?')`
   returns `??`, not `??????` (it was one per byte). Tabs and line breaks are no longer removed. The
   return type is `string` instead of `?string`.

@@ -81,5 +81,5 @@ composer require "byjg/convert"
 vendor/bin/phpunit
 ```
 
-----  
+----
 [Open source ByJG](https://opensource.byjg.com)

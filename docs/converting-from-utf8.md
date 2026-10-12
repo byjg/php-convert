@@ -63,7 +63,7 @@ The output format is: `=?charset?encoding?encoded-text?=`
 
 ## removeAccent
 
-Remove all accents and diacritical marks from UTF-8 text, converting accented characters to their ASCII equivalents.
+Remove the accents and diacritical marks of the Latin letters, converting them to their ASCII equivalents.
 
 ```php
 $str = \ByJG\Convert\FromUTF8::removeAccent('João');
@@ -74,7 +74,13 @@ echo $str; // Cafe resume
 
 $str = \ByJG\Convert\FromUTF8::removeAccent('Zürich');
 echo $str; // Zurich
+
+$str = \ByJG\Convert\FromUTF8::removeAccent('Škoda Dvořák Việt Nam');
+echo $str; // Skoda Dvorak Viet Nam
 ```
+
+It works for a precomposed letter (`é`) and for a letter followed by a combining mark
+(`e` + U+0301), using the Unicode decomposition (`Normalizer`).
 
 ### Character Conversions
 
@@ -83,14 +89,22 @@ Some notable conversions:
 - `È É Ê Ë` → `E`
 - `Ñ` → `N`
 - `Ç` → `C`
-- `Æ` → `AE`
+- `Æ` → `AE`, `Œ` → `OE`
 - `ß` → `ss`
-- `Ø` → `O`
+- `Ø` → `O`, `Ł` → `L`, `Đ` → `D`
 - `Þ` → `TH`, `ð` → `d`
 - `©` → `(C)`
 - `®` → `(R)`
 - `°` → `o.`
 - `½` → `1/2`
+
+### What Is Left Alone
+
+- Other scripts (Cyrillic, Greek, Japanese, Hebrew, …), where those marks are part of the letter
+- Symbols and punctuation outside Latin-1 (`€`, `✓`, `“`, `–`) and emoji
+- A text that is not valid UTF-8, which is returned unchanged
+
+Use [`onlyAscii()`](#onlyascii) when the result has to be ASCII.
 
 ### Use Cases
 
@@ -103,7 +117,9 @@ Some notable conversions:
 
 ## onlyAscii
 
-Convert UTF-8 text to contain only ASCII characters (0-127). Non-ASCII characters can be replaced with a default character.
+Convert UTF-8 text to printable ASCII (space to `~`, plus tabs and line breaks). The emoji are
+removed, the accents are removed, and every character still outside that range — the other control
+characters included — is replaced with a default character.
 
 ```php
 $str = \ByJG\Convert\FromUTF8::onlyAscii('João');
@@ -130,8 +146,8 @@ echo $str; // Cafe  (accents removed, the rest dropped)
 
 ### Difference from removeAccent
 
-- `removeAccent()`: Converts accented characters to their base form (á → a)
-- `onlyAscii()`: Removes or replaces all non-ASCII characters, including those without ASCII equivalents
+- `removeAccent()`: Converts accented Latin letters to their base form (á → a) and leaves the rest of the text as it is
+- `onlyAscii()`: Does the same, then removes or replaces every character with no ASCII equivalent
 
 ## removeEmoji
 

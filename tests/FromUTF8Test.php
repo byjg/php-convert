@@ -201,6 +201,33 @@ class FromUTF8Test extends TestCase
         $this->assertEquals("dad", FromUTF8::removeAccent("ðað"));
     }
 
+    public function testRemoveAccentBeyondLatin1(): void
+    {
+        $this->assertEquals("Skoda Dvorak Zurich", FromUTF8::removeAccent("Škoda Dvořák Zürich"));
+        $this->assertEquals("Istanbul Viet Nam", FromUTF8::removeAccent("İstanbul Việt Nam"));
+        $this->assertEquals("Lodz OEuvre coeur Dokovic", FromUTF8::removeAccent("Łódź Œuvre cœur Đoković"));
+
+        // The accent as a separate combining mark, the way macOS writes file names
+        $this->assertEquals("Jose", FromUTF8::removeAccent("Jose\u{0301}"));
+    }
+
+    public function testRemoveAccentLeavesEverythingElseAlone(): void
+    {
+        // They used to become "?"
+        $this->assertSame("€ ✓ “q” – ♥ ☹️ ❤️", FromUTF8::removeAccent("€ ✓ “q” – ♥ ☹️ ❤️"));
+
+        // In other scripts these marks are part of the letter, not an accent
+        foreach (["Привет й ё", "Ελληνικά", "がぎぐ", "한국어", "हिन्दी", "עִבְרִית"] as $text) {
+            $this->assertSame($text, FromUTF8::removeAccent($text));
+        }
+    }
+
+    public function testOnlyAsciiUsesTheDefaultCharForWhatHasNoAsciiForm(): void
+    {
+        $this->assertEquals("Skoda 5 q", FromUTF8::onlyAscii("Škoda €5 “q”"));
+        $this->assertEquals("Skoda ?5 ?q?", FromUTF8::onlyAscii("Škoda €5 “q”", '?'));
+    }
+
     public function testRemoveEmojiSequences(): void
     {
         $this->assertEquals("flag: ", FromUTF8::removeEmoji("flag: 🇧🇷"));

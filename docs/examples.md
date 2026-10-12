@@ -171,8 +171,8 @@ function safeFileName(string $fileName): string
     return $safe . '.' . $extension;
 }
 
-echo safeFileName("Relatório 2024 📊.pdf"); // Relatorio_2024__.pdf
-echo safeFileName("São Paulo - Foto.jpg"); // Sao_Paulo___Foto.jpg
+echo safeFileName("Relatório 2024 📊.pdf"); // Relatorio_2024_.pdf
+echo safeFileName("São Paulo - Foto.jpg"); // Sao_Paulo_-_Foto.jpg
 ```
 
 ### HTML to Plain Text Email

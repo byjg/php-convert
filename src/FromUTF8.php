@@ -2,6 +2,8 @@
 
 namespace ByJG\Convert;
 
+use Normalizer;
+
 class FromUTF8
 {
 
@@ -18,44 +20,44 @@ class FromUTF8
     }
 
     /**
-     * Remove all accents from UTF8 Chars.
+     * The Latin letters and symbols Unicode does not decompose into a base letter plus a mark,
+     * so removeAccent() has to be told what to write for them.
+     */
+    private const array NO_DECOMPOSITION = [
+        '¡' => '!', '¢' => 'C', '£' => 'pound', '¤' => 'currency', '¥' => 'yen',
+        '¦' => '|', '§' => 'section', '¨' => '"', '©' => '(C)', 'ª' => 'a.',
+        '«' => '<<', '¬' => '-', "\u{00AD}" => ' ', '®' => '(R)', '¯' => '-',
+        '°' => 'o.', '±' => '+-', '²' => '2', '³' => '3', '´' => '`',
+        'µ' => 'micro', '¶' => 'paragraph', '·' => '.', '¸' => ',', '¹' => '1',
+        'º' => '0.', '»' => '>>', '¼' => '1/4', '½' => '1/2', '¾' => '3/4',
+        '¿' => '?', "\u{00A0}" => ' ', '×' => 'x', '÷' => '/',
+        'Æ' => 'AE', 'æ' => 'ae', 'Œ' => 'OE', 'œ' => 'oe', 'ß' => 'ss',
+        'Ð' => 'D', 'ð' => 'd', 'Đ' => 'D', 'đ' => 'd', 'Þ' => 'TH', 'þ' => 'th',
+        'Ø' => 'O', 'ø' => 'o', 'Ł' => 'L', 'ł' => 'l', 'ı' => 'i',
+    ];
+
+    /**
+     * Remove the accents of the Latin letters: "João" becomes "Joao". It works for a precomposed
+     * letter ("é") and for a letter followed by combining marks ("e" + U+0301).
+     *
+     * Everything else is returned as it is: other scripts, where those marks are part of the
+     * letter, symbols and emoji. A text that is not valid UTF-8 is returned unchanged.
      *
      * @param string $text
      * @return string
      */
     public static function removeAccent(string $text): string
     {
-        $ASCII_CONV = [
-            194 => [
-                161=>'!' /*¡*/, 162=>'C' /*¢*/, 163=>'pound' /*£*/, 164=>'currency' /*¤*/, 165=>'yen' /*¥*/,
-                166=>'|' /*¦*/, 167=>'section' /*§*/, 168=>'"' /*¨*/, 169=>'(C)' /*©*/, 170=>'a.' /*ª*/,
-                171=>'<<' /*«*/, 172=>'-' /*¬*/, 173=>' ' /**/, 174=>'(R)' /*®*/, 175=>'-' /*¯*/,
-                176=>'o.' /*°*/, 177=>'+-' /*±*/, 178=>'2' /*²*/, 179=>'3' /*³*/, 180=>'`' /*´*/,
-                181=>'micro' /*µ*/, 182=>'paragraph' /*¶*/, 183=>'.' /*·*/, 184=>',' /*¸*/, 185=>'1' /*¹*/,
-                186=>'0.' /*º*/, 187=>'>>' /*»*/, 188=>'1/4' /*¼*/, 189=>'1/2' /*½*/, 190=>'3/4' /*¾*/,
-                191=>'?' /*¿*/, 160 => ' ' /* */,
-            ],
-            195 => [
-                128=>'A' /*À*/, 129=>'A' /*Á*/, 130=>'A' /*Â*/, 131=>'A' /*Ã*/, 132=>'A' /*Ä*/,
-                133=>'A' /*Å*/, 134=>'AE' /*Æ*/, 135=>'C' /*Ç*/, 136=>'E' /*È*/, 137=>'E' /*É*/,
-                138=>'E' /*Ê*/, 139=>'E' /*Ë*/, 140=>'I' /*Ì*/, 141=>'I' /*Í*/, 142=>'I' /*Î*/,
-                143=>'I' /*Ï*/, 144=>'D' /*Ð*/, 145=>'N' /*Ñ*/, 146=>'O' /*Ò*/, 147=>'O' /*Ó*/,
-                148=>'O' /*Ô*/, 149=>'O' /*Õ*/, 150=>'O' /*Ö*/, 151=>'x' /*×*/, 152=>'O' /*Ø*/,
-                153=>'U' /*Ù*/, 154=>'U' /*Ú*/, 155=>'U' /*Û*/, 156=>'U' /*Ü*/, 157=>'Y' /*Ý*/,
-                158=>'TH' /*Þ*/, 159=>'ss' /*ß*/, 160=>'a' /*à*/, 161=>'a' /*á*/, 162=>'a' /*â*/,
-                163=>'a' /*ã*/, 164=>'a' /*ä*/, 165=>'a' /*å*/, 166=>'ae' /*æ*/, 167=>'c' /*ç*/,
-                168=>'e' /*è*/, 169=>'e' /*é*/, 170=>'e' /*ê*/, 171=>'e' /*ë*/, 172=>'i' /*ì*/,
-                173=>'i' /*í*/, 174=>'i' /*î*/, 175=>'i' /*ï*/, 176=>'d' /*ð*/, 177=>'n' /*ñ*/,
-                178=>'o' /*ò*/, 179=>'o' /*ó*/, 180=>'o' /*ô*/, 181=>'o' /*õ*/, 182=>'o' /*ö*/,
-                183=>'/' /*÷*/, 184=>'o' /*ø*/, 185=>'u' /*ù*/, 186=>'u' /*ú*/, 187=>'u' /*û*/,
-                188=>'u' /*ü*/, 189=>'y' /*ý*/, 190=>'th' /*þ*/, 191=>'y' /*ÿ*/,
-            ],
-            197 => [
-                169=>'u' /*ũ*/, 168=>'U' /*Ũ*/,
-            ]
-        ];
-
-        return FromUTF8::baseConversion($ASCII_CONV, $text);
+        // A Latin letter outside ASCII, or any Latin letter carrying combining marks
+        return preg_replace_callback(
+            '/(?=[^\x00-\x7F])\p{Latin}\p{Mn}*|\p{Latin}\p{Mn}+/u',
+            fn(array $match) => preg_replace(
+                '/\p{Mn}+/u',
+                '',
+                (string)Normalizer::normalize($match[0], Normalizer::FORM_D)
+            ) ?? $match[0],
+            strtr($text, self::NO_DECOMPOSITION)
+        ) ?? $text;
     }
 
     /**
@@ -110,35 +112,5 @@ class FromUTF8
         );
 
         return mb_encode_numericentity($named, [0x80, 0x10FFFF, 0, 0x1FFFFF], 'UTF-8');
-    }
-
-    /**
-     * Base conversion
-     *
-     * @param array $vector
-     * @param string $text
-     * @return string
-     */
-    protected static function baseConversion(array $vector, string $text): string
-    {
-        $result = "";
-        $lenText = strlen($text);
-        $keys = array_keys($vector);
-        for ($i = 0; $i < $lenText; $i++) {
-            if (ord($text[$i]) == 226) {
-                $first = ord($text[$i++]);
-                $second = ord($text[$i++]);
-                $result .=
-                    $vector[$first][$second][ord($text[$i])] ?? '?'
-                ;
-            } elseif (in_array(ord($text[$i]), $keys)) {
-                $first = ord($text[$i++]);
-                $result .= $vector[$first][ord($text[$i])] ?? '?';
-            } else {
-                $result .= $text[$i];
-            }
-        }
-
-        return $result;
     }
 }
