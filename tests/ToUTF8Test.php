@@ -54,7 +54,7 @@ class ToUTF8Test extends TestCase
             . 'Þ ß à á â ã ä å æ ç '
             . 'è é ê ë ì í î ï ð ñ '
             . 'ò ó ô õ ö ø ù ú û ü '
-            . 'ũ ý þ ÿ   ¡ ¢ £ ¤ ¥ '
+            . 'ũ ý þ ÿ   ¡ ¢ £ ¤ ¥ '
             . '¦ § ¨ © ª « ¬ ® ¯ ° '
             . '± ² ³ ´ µ ¶ ¸ ¹ º » '
             . '¼ ½ ¾ ¿ × ÷ ∀ ∂ ∃ ∅ '
@@ -74,11 +74,11 @@ class ToUTF8Test extends TestCase
 
             $text2 = '&Agrave; &Aacute; &Acirc; &Atilde; &Auml; &Aring; &AElig; &Ccedil; &Egrave; &Eacute; '
              . '&Ecirc; &Euml; &Igrave; &Iacute; &Icirc; &Iuml; &ETH; &Ntilde; &Ograve; &Oacute; '
-             . '&Ocirc; &Otilde; &Ouml; &Oslash; &Ugrave; &Uacute; &Ucirc; &Uuml; &Utilde; &Yacute; '
+             . '&Ocirc; &Otilde; &Ouml; &Oslash; &Ugrave; &Uacute; &Ucirc; &Uuml; &#360; &Yacute; '
              . '&THORN; &szlig; &agrave; &aacute; &acirc; &atilde; &auml; &aring; &aelig; &ccedil; '
              . '&egrave; &eacute; &ecirc; &euml; &igrave; &iacute; &icirc; &iuml; &eth; &ntilde; '
              . '&ograve; &oacute; &ocirc; &otilde; &ouml; &oslash; &ugrave; &uacute; &ucirc; &uuml; '
-             . '&utilde; &yacute; &thorn; &yuml; &nbsp; &iexcl; &cent; &pound; &curren; &yen; '
+             . '&#361; &yacute; &thorn; &yuml; &nbsp; &iexcl; &cent; &pound; &curren; &yen; '
              . '&brvbar; &sect; &uml; &copy; &ordf; &laquo; &not; &reg; &macr; &deg; '
              . '&plusmn; &sup2; &sup3; &acute; &micro; &para; &cedil; &sup1; &ordm; &raquo; '
              . '&frac14; &frac12; &frac34; &iquest; &times; &divide; &forall; &part; &exist; &empty; '
@@ -148,5 +148,24 @@ class ToUTF8Test extends TestCase
             "Hey😊there😃how😢are😆you",
             ToUTF8::fromEmoji("Hey:)there:Dhow:'(areXDyou")
         );
+
+        // The longest emoticon wins: these start with a shorter one
+        $this->assertEquals(
+            "Angry 😠 angel 😇 evil 😈",
+            ToUTF8::fromEmoji("Angry >:( angel O:) evil >:)")
+        );
+    }
+
+    public function testFromHtmlEntitiesDecodesEveryEntity(): void
+    {
+        $this->assertEquals(
+            "& < > \" ' A Ũ \u{00A0}",
+            ToUTF8::fromHtmlEntities("&amp; &lt; &gt; &quot; &apos; &#x41; &#360; &nbsp;")
+        );
+    }
+
+    public function testCombiningCharOutsideLatin1(): void
+    {
+        $this->assertEquals("žṣ", ToUTF8::fromCombiningChar("z\u{030C}s\u{0323}"));
     }
 }
