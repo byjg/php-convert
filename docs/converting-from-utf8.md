@@ -8,7 +8,9 @@ The `FromUTF8` class provides methods to convert UTF-8 text to various other for
 
 ## toHtmlEntities
 
-Convert UTF-8 characters to their HTML entity equivalents.
+Convert UTF-8 text to ASCII, writing every other character as an HTML entity: a named one when it
+exists (`&atilde;`), otherwise a numeric one (`&#1055;`). `&`, `<` and `>` are left as they are, so
+the text may contain markup.
 
 ```php
 $str = \ByJG\Convert\FromUTF8::toHtmlEntities('João');
@@ -31,7 +33,7 @@ Convert UTF-8 text to MIME encoded-word format according to RFC 2047. This is co
 
 ```php
 $str = \ByJG\Convert\FromUTF8::toMimeEncodedWord('João');
-echo $str; // =?utf-8?Q?Jo=C3=A3o?=
+echo $str; // =?UTF-8?Q?Jo=C3=A3o?=
 
 $str = \ByJG\Convert\FromUTF8::toMimeEncodedWord('Hello World');
 echo $str; // Hello World (unchanged, no encoding needed)
@@ -41,7 +43,7 @@ echo $str; // Hello World (unchanged, no encoding needed)
 
 The output format is: `=?charset?encoding?encoded-text?=`
 
-- **charset**: Always `utf-8`
+- **charset**: Always `UTF-8`
 - **encoding**: Always `Q` (Quoted-Printable)
 - **encoded-text**: The text with special characters encoded as `=XX` where XX is the hexadecimal byte value
 
@@ -55,13 +57,13 @@ The output format is: `=?charset?encoding?encoded-text?=`
 ### Notes
 
 - Plain ASCII text is returned unchanged
-- Spaces are converted to underscores
-- Characters with ASCII value > 127 or the `?` character are encoded
-- The method only encodes when necessary
+- Only the words that need it are encoded: `Test ũ` becomes `Test =?UTF-8?Q?=C5=A9?=`
+- A long header is folded into several encoded words, one per line, as RFC 2047 requires
+- It is `mb_encode_mimeheader($text, 'UTF-8', 'Q')`
 
 ## removeAccent
 
-Remove all accents and diacritical marks from UTF-8 text, converting accented characters to their ASCII equivalents.
+Remove the accents and diacritical marks of the Latin letters, converting them to their ASCII equivalents.
 
 ```php
 $str = \ByJG\Convert\FromUTF8::removeAccent('João');
@@ -72,7 +74,13 @@ echo $str; // Cafe resume
 
 $str = \ByJG\Convert\FromUTF8::removeAccent('Zürich');
 echo $str; // Zurich
+
+$str = \ByJG\Convert\FromUTF8::removeAccent('Škoda Dvořák Việt Nam');
+echo $str; // Skoda Dvorak Viet Nam
 ```
+
+It works for a precomposed letter (`é`) and for a letter followed by a combining mark
+(`e` + U+0301), using the Unicode decomposition (`Normalizer`).
 
 ### Character Conversions
 
@@ -81,11 +89,22 @@ Some notable conversions:
 - `È É Ê Ë` → `E`
 - `Ñ` → `N`
 - `Ç` → `C`
-- `Æ` → `AE`
+- `Æ` → `AE`, `Œ` → `OE`
+- `ß` → `ss`
+- `Ø` → `O`, `Ł` → `L`, `Đ` → `D`
+- `Þ` → `TH`, `ð` → `d`
 - `©` → `(C)`
 - `®` → `(R)`
 - `°` → `o.`
 - `½` → `1/2`
+
+### What Is Left Alone
+
+- Other scripts (Cyrillic, Greek, Japanese, Hebrew, …), where those marks are part of the letter
+- Symbols and punctuation outside Latin-1 (`€`, `✓`, `“`, `–`) and emoji
+- A text that is not valid UTF-8, which is returned unchanged
+
+Use [`onlyAscii()`](#onlyascii) when the result has to be ASCII.
 
 ### Use Cases
 
@@ -98,23 +117,25 @@ Some notable conversions:
 
 ## onlyAscii
 
-Convert UTF-8 text to contain only ASCII characters (0-127). Non-ASCII characters can be replaced with a default character.
+Convert UTF-8 text to printable ASCII (space to `~`, plus tabs and line breaks). The emoji are
+removed, the accents are removed, and every character still outside that range — the other control
+characters included — is replaced with a default character.
 
 ```php
 $str = \ByJG\Convert\FromUTF8::onlyAscii('João');
 echo $str; // Joao
 
 $str = \ByJG\Convert\FromUTF8::onlyAscii('Hello 世界', '?');
-echo $str; // Hello ???
+echo $str; // Hello ?? (one ? per character)
 
-$str = \ByJG\Convert\FromUTF8::onlyAscii('Café', '');
-echo $str; // Caf (removes non-ASCII characters)
+$str = \ByJG\Convert\FromUTF8::onlyAscii('Café 世界', '');
+echo $str; // Cafe  (accents removed, the rest dropped)
 ```
 
 ### Parameters
 
 - `$text` (string): The UTF-8 text to convert
-- `$defaultChar` (string): Character to use for non-ASCII characters (default: empty string, which removes them)
+- `$defaultChar` (string): Replaces each character that is still not ASCII once the accents and emoji are removed (default: empty string, which removes them). Tabs and line breaks are kept.
 
 ### Use Cases
 
@@ -125,8 +146,8 @@ echo $str; // Caf (removes non-ASCII characters)
 
 ### Difference from removeAccent
 
-- `removeAccent()`: Converts accented characters to their base form (á → a)
-- `onlyAscii()`: Removes or replaces all non-ASCII characters, including those without ASCII equivalents
+- `removeAccent()`: Converts accented Latin letters to their base form (á → a) and leaves the rest of the text as it is
+- `onlyAscii()`: Does the same, then removes or replaces every character with no ASCII equivalent
 
 ## removeEmoji
 
@@ -161,35 +182,6 @@ echo $str; // Visit us in  or
 
 ### Notes
 
-- The method removes a comprehensive list of emoji characters
+- It matches the Unicode `Extended_Pictographic` property, so emoji added in newer Unicode
+  versions are removed too, with no list to keep up to date
 - Spaces may remain where emoji were removed
-- Some older emoji may not be in the removal list
-- The method uses a pre-defined list of emoji byte sequences
-
-## toIso88591Email (Deprecated)
-
-:::warning Deprecated
-This method is deprecated. Use `toMimeEncodedWord()` instead for email header encoding.
-:::
-
-Convert UTF-8 text to ISO-8859-1 encoded format for email headers.
-
-```php
-// Don't use this - use toMimeEncodedWord instead
-$str = \ByJG\Convert\FromUTF8::toIso88591Email('João');
-echo $str; // =?iso-8859-1?Q?Jo=E3o?=
-```
-
-### Migration
-
-Replace:
-```php
-FromUTF8::toIso88591Email($text)
-```
-
-With:
-```php
-FromUTF8::toMimeEncodedWord($text)
-```
-
-The new method provides better UTF-8 support and follows modern email standards.
