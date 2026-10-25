@@ -1,5 +1,6 @@
 ---
 sidebar_key: convert
+sidebar_category: text-content
 tags: [php, text-manipulation]
 ---
 
