@@ -5,7 +5,7 @@ tags: [php, text-manipulation]
 
 # String Conversion Utility
 
-A lightweight utility for string conversion between text from UTF8 to various formats and vice-versa. Supports HTML entities, MIME encoded words, accents removal, emoji conversion, and more.
+The text conversions UTF-8 code keeps rewriting, in one place: HTML entities, accents, emoji, MIME encoded words and ASCII-only text.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml)
@@ -14,6 +14,21 @@ A lightweight utility for string conversion between text from UTF8 to various fo
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-convert/)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-convert.svg)](https://opensource.byjg.com/license/)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-convert.svg)](https://github.com/byjg/php-convert/releases/)
+
+## Why
+
+Each of these is a small function that every project writes again, usually with a bug for a
+character nobody tested: accents in a slug, an email subject with "ç", user text with `:)` or
+emoji that a legacy system cannot store.
+
+Convert has them, both ways:
+
+```php
+FromUTF8::removeAccent('João');          // "Joao"
+FromUTF8::toMimeEncodedWord('João');     // "=?UTF-8?Q?Jo=C3=A3o?=", for email headers
+ToUTF8::fromEmoji('Hello :) <3');        // "Hello 😊 ❤️"
+FromUTF8::removeEmoji($userInput);
+```
 
 ## Features
 
